@@ -10,6 +10,7 @@ CREATE TABLE google_form.responses(
 	fk_questionID uuid,
 	email varchar(255),
 	response varchar(1000),
+	verfied boolean,
 	PRIMARY KEY (responseID),
 	CONSTRAINT fk_formID
 	FOREIGN KEY(fk_formID)

@@ -1,0 +1,7 @@
+FROM postgres:15.1-alpine
+
+LABEL author="Google Forms"
+LABEL description="Postgres DB for google froms"
+LABEL version="1.0"
+
+COPY ../database/*.sql /docker-entrypoint-initdb.d/

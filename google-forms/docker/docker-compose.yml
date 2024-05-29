@@ -1,0 +1,39 @@
+version: "3"
+name: google-forms
+services:
+  google_form_database:
+    container_name: google_form_database
+    image: postgres:16.2
+    environment:
+      POSTGRES_PASSWORD: super_cool_password
+      POSTGRES_USER: admin
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+    ports:
+      - target: 5432
+        published: 5432
+    networks:
+      - google_form_network
+    restart: unless-stopped
+
+  google_form_flyway:
+    container_name: google_form_flyway
+    image: flyway/flyway:10.13.0
+    command: migrate
+    environment:
+      DB_USER: admin
+      DB_PASSWORD: super_cool_password
+      DB_SERVER_HOST_NAME: google_form_database
+      DB_NAME: google_form
+      MIGRATION_DIRS: /flyway/sql/scripts
+    volumes:
+      - ./configuration/flyway.conf:/flyway/conf/flyway.conf
+      - ../database/scripts/:/flyway/sql/scripts
+    depends_on:
+      - google_form_database
+    networks:
+      - google_form_network
+
+networks:
+  google_form_network:
+    name: google_form_network
