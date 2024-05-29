@@ -2,11 +2,11 @@ const { query } = require('express');
 const {Pool} =require('pg');
 
 const pool= new Pool({
-    user:"postgres_admin",
-    password:"magical_password",
+    user:"admin",
+    password:"super_cool_password",
     host:"localhost",
     port:5432,
-    database:"google forms"
+    database:"google_form"
 })
 
 module.exports={
