@@ -74,6 +74,6 @@ jobs:
             environment_name: google-forms-elastic-beanstalk-env
             version_label: ${{ github.run_number }}
             region: ${{ env.AWS_REGION }}
-            deployment_package: deploy.zip
+            deployment_package: ${{ github.workspace }}/deploy.zip
 
 
