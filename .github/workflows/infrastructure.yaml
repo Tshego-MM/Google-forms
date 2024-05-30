@@ -67,8 +67,8 @@ jobs:
         - name: Beanstalk Deploy for app
           uses: einaregilsson/beanstalk-deploy@v16
           with:
-            aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+            aws_access_key: ${{ env.AWS_ACCESS_KEY_ID }}
+            aws_secret_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
             application_name: google-forms-application-backend
             environment_name: google-forms-elastic-beanstalk-env
             version_label: ${{ github.run_number }}
