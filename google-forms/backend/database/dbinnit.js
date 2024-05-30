@@ -2,13 +2,22 @@ const { query } = require('express');
 const {Pool} =require('pg');
 
 const pool= new Pool({
-    user:"admin",
-    password:"super_cool_password",
-    host:"localhost",
-    port:5432,
-    database:"google_form"
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_DATABASE
 })
 
+pool.connect((err, client, release) => {
+    if (err) {
+        return console.error('Error acquiring client', err.stack);
+    }
+    console.log('Database connected successfully');
+    release();
+});
+
 module.exports={
-    query: (text, params) => pool.query(text, params)
+    query: (text, params) => pool.query(text, params),
+    connect: () => pool.connect()
 }
