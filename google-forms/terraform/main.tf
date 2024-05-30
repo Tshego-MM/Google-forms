@@ -133,7 +133,7 @@ resource "aws_elastic_beanstalk_application" "google-forms-beanstalk-backend-app
 
 resource "aws_elastic_beanstalk_environment" "google-forms-elastic-beanstalk-env" {
   name                = "google-forms-elastic-beanstalk-env"
-  application         = aws_elastic_beanstalk_application.google-forms-beanstalk-backend-app
+  application         = aws_elastic_beanstalk_application.google-forms-beanstalk-backend-app.name
   solution_stack_name = "64bit Amazon Linux 2023 v6.1.5 running Node.js 20"
   cname_prefix        = "google-forms-app"
 
