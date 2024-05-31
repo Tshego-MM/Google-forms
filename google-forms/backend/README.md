@@ -4,7 +4,6 @@ POST: /api/forms/create
 
 Body:
 ```
-{
     [
         {
             question : 'Are you a student?',
@@ -17,7 +16,6 @@ Body:
             options : []
         }
     ]
-}
 ```
 
 Response:
@@ -25,7 +23,7 @@ Response:
 {
     status:ok||error,
     message : error message if there is any,
-    formLink : serverurl/api/forms/:formId
+    formLink : hostname/forms/:formId
 }
 ```
 
@@ -64,6 +62,7 @@ Body:
 ```
 {
     formId : uuid,
+    override : false, //false by default
     responses : [
         {
             questionId : uuid,
@@ -77,6 +76,28 @@ Body:
 }
 ```
 
+If the user has already submitted the responses for that form, we'll ask the user to confirm if they would like to override the previous responses. If so re-send the responses with `override: true`
+
+#\nAPI Response
+
+```
+{
+    formId : uuid,
+    status : warning || ok, //will return status code 409 if the user should confirm to override
+    message : Responses already exist for this form. Please confirm if you want to override them.?
+    responses : [
+        {
+            questionId : uuid,
+            response : 'No'
+        },
+        {
+            questionId : uuid,
+            response : 23
+        },
+    ]
+}   
+```
+
 ###Get form Responses
 
 GET: /api/responses/:formId
@@ -85,15 +106,25 @@ Body:
 ```
 {
     formId : uuid,
-    responses : [
+    formResponses : [
         {
             question : 'Are you a student',
-            response : No
+            responses : [No, No, Yes]
         },
         {
             question : 'How old are you',
-            response : 23
+            responses : [23,12, 33]
         }
     ]
 }
+```
+
+
+###Donload responses
+
+GET: /api/responses/download/:formId
+
+Response
+```
+Excel file
 ```

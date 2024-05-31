@@ -1,4 +1,5 @@
 const pool = require('../database/dbinnit');
+const { maxQuestions, maxOptions } = require('../config/constants');
 
 class Form{
     static async createForm(ownerId,questions){
@@ -7,8 +8,8 @@ class Form{
         const client = await pool.connect();
         try {
             await pool.query('BEGIN');
-            if(questions?.length>10){
-                throw new Error(`More than 10 questions given`);
+            if(questions?.length>maxQuestions){
+                throw new Error(`More than ${maxQuestions} questions given`);
             }
             const formResult = await client.query(
                 'INSERT INTO google_form.forms(ownerID) VALUES ($1) RETURNING formID',
@@ -25,8 +26,8 @@ class Form{
                 const questionId = questionResult.rows[0].questionid;
 
                 if (question?.options && question?.options.length > 0) {
-                    if(question?.options.length>5){
-                        throw new Error(`More than 5 options given`);
+                    if(question?.options.length>maxOptions){
+                        throw new Error(`More than ${maxOptions} options given`);
                     }
                     for (const option of question.options) {
                         await client.query(
