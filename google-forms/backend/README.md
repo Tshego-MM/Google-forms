@@ -62,6 +62,7 @@ Body:
 ```
 {
     formId : uuid,
+    override : false, //false by default
     responses : [
         {
             questionId : uuid,
@@ -75,6 +76,28 @@ Body:
 }
 ```
 
+If the user has already submitted the responses for that form, we'll ask the user to confirm if they would like to override the previous responses. If so re-send the responses with `override: true`
+
+#\nAPI Response
+
+```
+{
+    formId : uuid,
+    status : already-exist || ok,
+    message : A submission was found, do you want to override previous response?
+    responses : [
+        {
+            questionId : uuid,
+            response : 'No'
+        },
+        {
+            questionId : uuid,
+            response : 23
+        },
+    ]
+}   
+```
+
 ###Get form Responses
 
 GET: /api/responses/:formId
@@ -83,14 +106,14 @@ Body:
 ```
 {
     formId : uuid,
-    responses : [
+    formResponses : [
         {
             question : 'Are you a student',
-            response : No
+            responses : [No, No, Yes]
         },
         {
             question : 'How old are you',
-            response : 23
+            responses : [23,12, 33]
         }
     ]
 }
