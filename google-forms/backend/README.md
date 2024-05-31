@@ -4,7 +4,6 @@ POST: /api/forms/create
 
 Body:
 ```
-{
     [
         {
             question : 'Are you a student?',
@@ -17,7 +16,6 @@ Body:
             options : []
         }
     ]
-}
 ```
 
 Response:
@@ -25,7 +23,7 @@ Response:
 {
     status:ok||error,
     message : error message if there is any,
-    formLink : serverurl/api/forms/:formId
+    formLink : hostname/forms/:formId
 }
 ```
 
