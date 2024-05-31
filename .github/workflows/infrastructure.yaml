@@ -90,7 +90,7 @@ jobs:
             node-version: '20.x'
         - run: npm install
         - run: npm audit fix
-        - run: npm run build --configuration production
+        - run: npm run build
         
         - name: Deploy
           if: success()
