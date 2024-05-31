@@ -3,7 +3,7 @@ name: AWS-Infrastructure
 on:
   push:
     branches:
-      - tshego/feat/deploy-server
+      - main
 
 env:
   AWS_REGION: "eu-west-1"
@@ -46,7 +46,7 @@ jobs:
               run: terraform apply -auto-approve
 
 
-    BuildNodeServer:
+    BuildAndDeployServer:
       runs-on: ubuntu-latest
       needs: ConfigureAwsAndTerraform
       defaults:
