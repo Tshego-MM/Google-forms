@@ -83,8 +83,8 @@ If the user has already submitted the responses for that form, we'll ask the use
 ```
 {
     formId : uuid,
-    status : already-exist || ok,
-    message : A submission was found, do you want to override previous response?
+    status : warning || ok, //will return status code 409 if the user should confirm to override
+    message : Responses already exist for this form. Please confirm if you want to override them.?
     responses : [
         {
             questionId : uuid,
@@ -117,4 +117,14 @@ Body:
         }
     ]
 }
+```
+
+
+###Donload responses
+
+GET: /api/responses/download/:formId
+
+Response
+```
+Excel file
 ```
