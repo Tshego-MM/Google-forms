@@ -1,5 +1,6 @@
 const pool = require('../database/dbinnit');
-const { maxQuestions, maxOptions } = require('../config/constants');
+const { FORM } = require('../config/constants');
+const {maxOptions,maxQuestions}=FORM;
 
 class Form{
     static async createForm(ownerId,questions){
