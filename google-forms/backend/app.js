@@ -10,12 +10,15 @@ var usersRouter = require('./routes/userRoute');
 var responseRouter = require('./routes/responseRoute');
 var formRouter = require('./routes/formRoute');
 
+var ensureSecure = require('./middleware/ensureSecure');
+
 var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(ensureSecure);
 
 app.use('/api/', indexRouter);
 app.use('/api/users', usersRouter);
