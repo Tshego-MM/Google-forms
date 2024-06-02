@@ -98,7 +98,7 @@ If the user has already submitted the responses for that form, we'll ask the use
 }   
 ```
 
-###Get form Responses
+###Get form Responses (admin)
 
 GET: /api/responses/:formId
 
@@ -120,11 +120,23 @@ Body:
 ```
 
 
-###Donload responses
+###Donload responses (admin)
 
 GET: /api/responses/download/:formId
 
 Response
 ```
 Excel file
+```
+
+
+#If there are too many request from the same IP:
+
+Response:
+
+```
+server code : 429,
+{
+    "message": "Too many requests from this IP, please try again later."
+}
 ```

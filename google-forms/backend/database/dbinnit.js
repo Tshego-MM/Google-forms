@@ -7,9 +7,11 @@ const pool= new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_DATABASE,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    /*ssl: {
+        rejectUnauthorized: false,
+        ca: fs.readFileSync('path/to/ca.crt').toString(),
+    }*/
+    ssl:false
 })
 
 pool.connect((err, client, release) => {
