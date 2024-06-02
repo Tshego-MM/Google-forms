@@ -10,7 +10,7 @@ var usersRouter = require('./routes/userRoute');
 var responseRouter = require('./routes/responseRoute');
 var formRouter = require('./routes/formRoute');
 
-var ensureSecure = require('./middleware/ensureSecure');
+var {ensureSecure,verifyJWT} = require('./middleware/ensureSecure');
 var rateLimit = require('./middleware/reateLimit');
 
 var app = express();
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(ensureSecure);//comment this line in dev
+app.use(verifyJWT)
 app.use(rateLimit);
 
 app.use('/api/', indexRouter);
