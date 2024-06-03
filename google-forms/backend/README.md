@@ -4,18 +4,17 @@ POST: /api/forms/create
 
 Body:
 ```
-    [
-        {
-            question : 'Are you a student?',
-            questionType : int,
-            options : ['No','Yes']
-        },
-        {
-            question : 'How old are you?',
-            questionType : int,
-            options : []
-        }
-    ]
+{
+  "title": "your title",
+  "description": "your question",
+  "questions": [
+    {
+      "question": "Are you a student?",
+      "questionType": int,
+      "options": ["No", "Yes"]
+    }
+  ]
+}
 ```
 
 Response:

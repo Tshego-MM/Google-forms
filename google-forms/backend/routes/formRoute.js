@@ -5,7 +5,10 @@ const Form = require('../models/formModel');
 router.post('/create', async (req, res) => {
   const userId = req.username;
     try {
-        const responseObject = await Form.createForm(userId,req.body);
+        const questions=req.body.questions;
+        const title=req.body.title;
+        const description=req.body.description
+        const responseObject = await Form.createForm(userId,title,description,questions);
         
         res.status(200).json({ 
             status : responseObject.status,
