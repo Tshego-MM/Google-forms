@@ -33,6 +33,11 @@ const verifyJWT=(async(req, res,next)=>{
           if(jwk.keys[0].kid===header.kid){
             const pem=jwkToPem(jwk.keys[0]);
             jwt.verify(token,pem,{algorithms:['RS256']})
+
+            const decodedToken = jwt.decode(token);
+            const username = decodedToken['cognito:username'];
+            
+            req.username = username;
             next();
           }else{
             res.status(401).send("unauthorized")

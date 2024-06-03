@@ -17,8 +17,6 @@ class Responses{
 
             const formResponses = {};
             result.rows.forEach(row => {
-                console.log(row)
-                console.log(formResponses);
                 if (!formResponses[row.question]) {
                     formResponses[row.question] = {
                         question: row.question,
