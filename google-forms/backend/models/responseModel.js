@@ -1,11 +1,24 @@
+const { error } = require('console');
 const pool = require('../database/dbinnit');
 const excel = require('exceljs');
 
 class Responses{
 
-    static async getFormResponses(formId){
+    static async getFormResponses(formId,userId){
         const client = await pool.connect();
         try {
+            const form = await client.query(
+                `SELECT *
+                 FROM google_form.forms f
+                 WHERE f.ownerID = $1
+                 AND f.formId = $2`,
+                 [userId,formId]
+            );
+
+            if(form.rows.length<1){
+                throw new Error(`Cannot access this form.`);
+            }
+
             const result = await client.query(
                 `SELECT q.questionID, q.questionText AS question, r.response 
                  FROM google_form.responses r
@@ -17,8 +30,6 @@ class Responses{
 
             const formResponses = {};
             result.rows.forEach(row => {
-                console.log(row)
-                console.log(formResponses);
                 if (!formResponses[row.question]) {
                     formResponses[row.question] = {
                         question: row.question,
