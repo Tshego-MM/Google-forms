@@ -1,0 +1,68 @@
+<app-header />
+
+<section  cdkDropListGroup>
+  <aside>
+    <h2>Components</h2>
+    <ul
+      cdkDropList
+      [cdkDropListData]="components"
+      class="components"
+    >
+      @for (item of components; track item) {
+        <li cdkDrag>
+          <app-element-thumbnail [icon]="item.icon" [title]="item.title" />
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <main>
+    <mat-card class="form">
+      <mat-card-header>
+        <mat-card-title>{{ title }}</mat-card-title>
+        <mat-card-subtitle>{{ description }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <ul
+          cdkDropList
+          [cdkDropListData]="fields"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @if (!fields.length) {
+            <div class="empty-fields-placeholder">
+              <mat-icon fontIcon="add" />
+              <p>Drag new elements here</p>
+            </div>
+          }
+          @for (item of fields; track item; let i = $index) {
+            <li cdkDrag>
+              <div class="element-placeholder" *cdkDragPlaceholder></div>
+              <app-form-element
+                [key]="i"
+                [properties]="item.properties"
+                (removed)="removeField($event)"
+              />
+            </li>
+          }
+        </ul>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button
+          mat-button
+          color="warn"
+          (click)="discard()"
+        >
+          Discard
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="save()"
+        >
+          Save</button>
+      </mat-card-actions>
+    </mat-card>
+  </main>
+
+</section>

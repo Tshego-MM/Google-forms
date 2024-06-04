@@ -1,0 +1,29 @@
+<mat-expansion-panel class="mat-elevation-z0 element">
+  <mat-expansion-panel-header>
+    <mat-panel-title>{{ properties().value.question?.length ? properties().value.question : 'Question' }}</mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <form [formGroup]="properties()">
+    <mat-form-field appearance="outline">
+      <mat-label>Question</mat-label>
+      <input matInput formControlName="question" type="text" placeholder="E.g. What does the fox say?">
+      @if (properties().errors) {
+        <mat-error>{{ '' }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" type="text" placeholder="E.g. email">
+      @if (properties().errors) {
+        <mat-error>{{ '' }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
+  </form>
+
+  <mat-action-row >
+    <button mat-button color="warn" (click)="onRemove()">Remove</button>
+  </mat-action-row>
+</mat-expansion-panel>

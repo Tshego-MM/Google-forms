@@ -13,7 +13,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {},
+    "paths": {
+      "@/constants/*": ["src/app/constants/*"],
+      "@/components/*": ["src/app/components/*"],
+      "@/pages/*": ["src/app/pages/*"]
+    },
     "useDefineForClassFields": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

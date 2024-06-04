@@ -1,0 +1,10 @@
+mat-card {
+  min-height: 6rem;
+  min-width: 6rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}

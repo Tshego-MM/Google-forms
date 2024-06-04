@@ -1,0 +1,11 @@
+mat-expansion-panel {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 8px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+}
