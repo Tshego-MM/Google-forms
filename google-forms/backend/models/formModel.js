@@ -105,7 +105,7 @@ class Form{
         try{
             const res = await client.query(
                 `
-                SELECT f.form_name AS Tittle, 
+                SELECT f.form_name AS Title, 
                        f.form_description AS Description,
                        f.formID AS formId
                 FROM 

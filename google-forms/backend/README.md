@@ -53,6 +53,29 @@ Response:
 }
 ```
 
+###Get all forms created by the user(admin)
+
+GET: api/forms/myforms
+
+Response:
+```
+[
+
+    {
+        "title": "Test title",
+        "description": "Test description",
+        "formid": "37f088f0-2c1a-45ed-ada1-df50b9392eac"
+    },
+    {
+        "title": "Test form",
+        "description": "Q1",
+        "formid": "d58e5652-a97b-4f9a-8201-23cc4632a5cd"
+    }
+]
+```
+
+
+
 ###Submit form response
 
 POST: /api/responses/
