@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRoute');
@@ -14,6 +15,14 @@ var {ensureSecure,verifyJWT} = require('./middleware/ensureSecure');
 var rateLimit = require('./middleware/reateLimit');
 
 var app = express();
+
+
+const corsOptions = {
+    origin: 'http://localhost:4200', //front-end url
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());
