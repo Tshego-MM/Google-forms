@@ -100,6 +100,28 @@ class Form{
         }
     }
 
+    static async getUserForms(userId){
+        const client = await pool.connect();
+        try{
+            const res = await client.query(
+                `
+                SELECT f.form_name AS Tittle, 
+                       f.form_description AS Description,
+                       f.formID AS formId
+                FROM 
+                    google_form.forms f
+                WHERE
+                    f.ownerID = $1
+                `, [userId]);
+            
+            return res.rows;
+        }catch(error){
+            throw new Error(`${error.message}`);
+        }finally{
+            client.release();
+        }
+    }
+
 }
 
 module.exports = Form;
