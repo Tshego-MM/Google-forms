@@ -1,0 +1,14 @@
+p {
+  margin: 0;
+}
+
+:host {
+  padding: 1rem;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -22,8 +22,8 @@ router.post('/', async (req, res) => {
 // });
 
 
-router.get("/login", async(req,res) =>{
-  await User.verifyJWT(req,res,()=>{res.send("Login Succesful")})
+router.get("/testJWT", async(req,res) =>{
+  res.send(200);
 })
 
 module.exports = router;
