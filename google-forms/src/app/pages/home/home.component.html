@@ -3,7 +3,7 @@
 <main>
   <h2>Your Forms:</h2>
   <article class="button-wrapper">
-    <button (click)="onOpenBuildFormDialog()">Build Form</button>
+    <button (click)="onOpenBuildFormDialog()" [disabled] ="!loggedIn">Build Form</button>
     <button (click)="login()" [disabled]="loggedIn">Login</button>
     <button [disabled]="!loggedIn" (click)="logout()">Logout</button>
   </article>
