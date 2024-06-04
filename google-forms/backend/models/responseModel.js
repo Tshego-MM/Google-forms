@@ -8,7 +8,7 @@ class Responses{
         const client = await pool.connect();
         try {
             const form = await client.query(
-                `SELECT *
+                `SELECT formid, ownerid, form_name, form_description
                  FROM google_form.forms f
                  WHERE f.ownerID = $1
                  AND f.formId = $2`,
