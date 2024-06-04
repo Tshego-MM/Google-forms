@@ -21,4 +21,9 @@ export default class HomePage {
   onOpenBuildFormDialog () {
     this.dialog.open(BuildFormDialog)
   }
+
+  async login(){
+    const data=await fetch("http://localhost:3000/api/login")
+    console.log(data)
+  }
 }
