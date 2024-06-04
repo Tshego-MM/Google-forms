@@ -4,7 +4,8 @@
   <h2>Your Forms:</h2>
   <article class="button-wrapper">
     <button (click)="onOpenBuildFormDialog()">Build Form</button>
-    <button (click)="login()">Login</button>
+    <button (click)="login()" [disabled]="loggedIn">Login</button>
+    <button [disabled]="!loggedIn" (click)="logout()">Logout</button>
   </article>
 </main>
 
