@@ -10,9 +10,15 @@ import { getHashParameters } from "@/utilities/url";
 import { catchError, finalize, of, throwError } from "rxjs";
 import SnackbarService from "@/services/snackbar.service";
 import FormService from "@/services/form.service";
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @Component({
   imports: [
+    MatCardModule,
+    MatButtonModule,
+    ClipboardModule,
     FooterComponent,
     HeaderComponent,
   ],
@@ -29,6 +35,8 @@ export default class HomePage implements OnInit {
   private readonly snackbarService = inject(SnackbarService)
 
   loggedIn = false
+
+  forms: any[] = []
 
   onOpenBuildFormDialog () {
     this.dialog.open(BuildFormDialog)
@@ -70,11 +78,25 @@ export default class HomePage implements OnInit {
         })
     }
 
-    this.formService.fetchForms().subscribe(console.log)
+    this.formService.fetchForms().subscribe(forms => {
+      this.forms = forms
+    })
   }
 
   logout () {
     this.authService.logout()
     this.router.navigateByUrl('/auth')
+  }
+
+  onViewForm (id: string) {
+    this.router.navigate(['survey', id])
+  }
+
+  onCopy () {
+    this.snackbarService.show({ message: 'Copied to clipboard!' })
+  }
+
+  surveyUrl (id: string) {
+    return `${window.location.origin}/survey/${id}`
   }
 }

@@ -8,33 +8,14 @@
     </mat-card-header>
     <mat-card-content>
       <form>
-        <!-- @for (key of formKeys(); track key; let i = $index) {
-          <div class="field">
-            <label [for]="">{{ fields[i].properties.question }}</label>
-            <mat-form-field appearance="outline">
-              <input
-                matInput
-                [formControl]="getControl(key)"
-                type="text"
-                [placeholder]="getControl(key).value.placeholder"
-              >
-              @if (getControl(key).errors) {
-                <mat-error>{{ '' }}</mat-error>
-              }
-            </mat-form-field>
-          </div>
-        } -->
         @for (control of form.controls; track control; let i = $index) {
-          <label [for]="">{{ fields[i].question }}</label>
+          <label [for]="">{{ survey.questions[i].question }}</label>
           <mat-form-field appearance="outline">
             <input
               matInput
               [formControl]="control"
               type="text"
             >
-            <!-- @if (getControl(key).errors) {
-              <mat-error>{{ '' }}</mat-error>
-            } -->
           </mat-form-field>
         }
       </form>

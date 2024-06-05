@@ -53,7 +53,6 @@ export default class BuildFormDialog {
 
     localStorage.setItem('FORM', JSON.stringify(form))
 
-    // TODO: Navigate to build page with data
     this.router.navigateByUrl('/builder')
   }
 
