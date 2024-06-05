@@ -1,14 +1,18 @@
 import FormElementComponent from "@/components/element/element.component";
 import HeaderComponent from "@/components/header/header.component";
 import ElementThumbnailComponent from "@/components/thumbnail/element/element.thumbnail.component";
+import FormService from "@/services/form.service";
+import SnackbarService from "@/services/snackbar.service";
 import { CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup } from "@angular/cdk/drag-drop";
-import { Component, input } from "@angular/core";
+import { Component, inject, input } from "@angular/core";
 import {  FormArray, FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
+import { ActivatedRoute } from "@angular/router";
+import { catchError, throwError } from "rxjs";
 
 @Component({
   imports: [
@@ -33,29 +37,46 @@ import { MatInputModule } from "@angular/material/input";
   templateUrl: './survey.component.html',
 })
 export default class SurveyPage {
+  private readonly route = inject(ActivatedRoute)
+  private readonly formService = inject(FormService)
+  private readonly snackbarService = inject(SnackbarService)
+
+  id = ''
   title = 'New Form'
   description = 'A generic form'
 
   fields: any[] = []
 
   form = new FormArray<FormControl>([])
+  survey: any = {}
+
   ngOnInit () {
-    const item = localStorage.getItem('FORM') 
-
-    if (!item) return
-
-    const survey = JSON.parse(item)
-
-    if (survey.title?.length) this.title = survey.title
-    if (survey.description?.length) this.description = survey.description
-    if (survey.questions?.length) this.fields = survey.questions
-
-    console.log('SURVEY',survey)
-
-    survey.questions.forEach(() => {
-      const control: FormControl = new FormControl('');
-      this.form.push(control, { emitEvent: false })
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id') ?? ''
     })
+
+    this.formService.fetchForm(this.id)
+      .subscribe(survey => {
+        this.survey = survey
+        console.log(this.survey)
+
+        this.survey.questions.forEach(() => {
+          const control: FormControl = new FormControl('');
+          this.form.push(control, { emitEvent: false })
+        })
+      })
+
+    // const item = localStorage.getItem('FORM') 
+
+    // if (!item) return
+
+    // const survey = JSON.parse(item)
+
+    // if (survey.title?.length) this.title = survey.title
+    // if (survey.description?.length) this.description = survey.description
+    // if (survey.questions?.length) this.fields = survey.questions
+
+    // console.log('SURVEY',survey)
   }
 
   formKeys () {
@@ -66,5 +87,25 @@ export default class SurveyPage {
     return this.form.get(name) as FormControl
   }
 
-  submit () {console.log("logged")}
+  submit () {
+    const request = {
+      formId: this.id,
+      // override: false,
+      responses: this.survey.questions.map((q: any, index: number) => ({
+        questionId: q.questionId,
+        response: this.form.value[index],
+      }))
+    }
+
+    this.formService.createResponse(request)
+      .pipe(
+        catchError(error => {
+          this.snackbarService.show({ message: 'Error submitting response' })
+          return throwError(() => new Error(error.message))
+        })
+      )
+      .subscribe(() => {
+        this.snackbarService.show({ message: 'Response submitted!' })
+      })
+  }
 }
