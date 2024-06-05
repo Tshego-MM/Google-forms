@@ -5,15 +5,21 @@ mat-dialog-content {
     display: flex;
     flex-direction: column;
   }
-  button{
-    flex:1;
-    flex-wrap: wrap;
-    margin: 1em;
-    border-radius: 15px;
-    padding:1em;
-    background-color: darkslategray;
-  }
-  button:hover{
-    background-color: #2a3f42;
-  }
+
+}
+
+.mat-success {
+  background-color: darkslategray;
+  color:white;
+}
+.mat-success:hover{
+  background-color: #2a3f42;
+}
+
+.mat-success:not(:disabled){
+  color: white;
+}
+.mat-success:disabled{
+  background-color: lightgray;
+  color: darkgray;
 }

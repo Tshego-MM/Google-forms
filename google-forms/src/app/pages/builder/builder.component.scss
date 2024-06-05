@@ -20,9 +20,6 @@ section {
   flex-grow: 1;
   overflow-y: hidden;
 
-  aside {
-
-  }
 
   main {
     display: flex;
@@ -91,4 +88,24 @@ section {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+aside{
+  margin: 1rem;
+}
+
+.mat-success {
+  background-color: darkslategray;
+  color:white;
+}
+.mat-success:hover{
+  background-color: #2a3f42;
+}
+
+.mat-success:not(:disabled){
+  color: white;
+}
+.mat-success:disabled{
+  background-color: lightgray;
+  color: darkgray;
 }

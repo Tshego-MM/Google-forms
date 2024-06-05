@@ -12,14 +12,6 @@
       }
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" type="text" placeholder="E.g. email">
-      @if (properties().errors) {
-        <mat-error>{{ '' }}</mat-error>
-      }
-    </mat-form-field>
-
     <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
   </form>
 
