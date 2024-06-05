@@ -1,5 +1,5 @@
 import HeaderComponent from "@/components/header/header.component";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
   CdkDrag,
   CdkDragDrop,
@@ -18,6 +18,10 @@ import { cloneDeep } from "lodash";
 import ElementThumbnailComponent from "@/components/thumbnail/element/element.thumbnail.component";
 import FormElementComponent from "@/components/element/element.component";
 import { MatButtonModule } from "@angular/material/button";
+import FormService from "@/services/form.service";
+import { catchError, finalize, throwError } from "rxjs";
+import SnackbarService from "@/services/snackbar.service";
+import { Router } from "@angular/router";
 
 @Component({
   imports: [
@@ -39,6 +43,10 @@ import { MatButtonModule } from "@angular/material/button";
   templateUrl: './builder.component.html',
 })
 export default class BuilderPage {
+  private readonly formService = inject(FormService)
+  private readonly snackbarService = inject(SnackbarService)
+  private readonly router = inject(Router)
+
   title = 'New Form'
   description = 'A generic description'
 
@@ -87,6 +95,37 @@ export default class BuilderPage {
       },
       content: this.fields.map(f => ({ ...f, properties: f.properties.value })),
     }))
+
+    const questions = this.fields.map(f => ({
+      question: f.properties.value.question,
+      questionType: 2
+    }))
+
+    const form = {
+      title: this.title,
+      description: this.description,
+      questions,
+    }
+
+    this.formService
+      .createForm(form)
+      .pipe(
+        catchError(error => {
+          this.snackbarService.show({
+            message: 'Error creating form',
+            config: { panelClass: 'info-notification' }
+          })
+          return throwError(() => new Error(error))
+        }),
+        finalize(() => {
+          this.snackbarService.show({
+            message: 'Form created successully!',
+            config: { panelClass: 'info-notification' }
+          })
+          this.router.navigateByUrl('/')
+        })
+      )
+      .subscribe()
   }
 
   toggleSidebar () {

@@ -1,9 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
 import FooterComponent from "@/components/footer/footer.component";
 import HeaderComponent from "@/components/header/header.component";
 import BuildFormDialog from "@/components/dialog/build-form/build-form.dialog.component";
+import { Router } from "@angular/router";
+import AuthService from "@/services/auth.service";
+import { getHashParameters } from "@/utilities/url";
+import { catchError, finalize, of, throwError } from "rxjs";
+import SnackbarService from "@/services/snackbar.service";
+import FormService from "@/services/form.service";
 
 @Component({
   imports: [
@@ -16,42 +22,59 @@ import BuildFormDialog from "@/components/dialog/build-form/build-form.dialog.co
   templateUrl: './home.component.html',
 })
 export default class HomePage implements OnInit {
-  
-  constructor (public dialog: MatDialog) {}
+  public readonly dialog = inject(MatDialog)
+  private readonly router = inject(Router)
+  private readonly authService = inject(AuthService)
+  private readonly formService = inject(FormService)
+  private readonly snackbarService = inject(SnackbarService)
+
+  loggedIn = false
 
   onOpenBuildFormDialog () {
     this.dialog.open(BuildFormDialog)
   }
-  loggedIn=false;
-  async ngOnInit():Promise<void>{
-    const url=window.location.href;
-    if(url.includes("token")){
-      const regex = /id_token=([^&]*)/;
-      const match = url.match(regex);
-      const jwt= match ? match[1] : null; //this jwt needs to be saved somewhere and added to all api requests in the autorization header with the word Bearer before hand
-      
-      const verification=await fetch("http://localhost:3000/api/users/testJWT", { //this url needs to be abstracted better
-        method: "GET",
-        headers:{
-          'Authorization': `Bearer ${jwt}`
-        }
-      })
-      if(verification.status===200){
-        this.loggedIn=true;
 
-      }else{
-        this.loggedIn=false;
-      }
+  ngOnInit () {
+    let isLocalStorageUpdated = false
+    let credentials = this.authService.fetchCredentials()
+
+    const token = credentials?.['id_token']
+
+    if (token) {
+      this.authService
+        .verifyToken(credentials['token_type'], credentials['id_token'])
+        .pipe(
+          catchError(error => throwError(() => new Error(error.message)))
+        )
+        .subscribe(() => {
+          this.authService.persistCredentials(credentials)
+          isLocalStorageUpdated = true
+        })
     }
-   
+
+    if (isLocalStorageUpdated) return
+
+    credentials = getHashParameters()
+
+    if (credentials) {
+      this.authService
+        .verifyToken(credentials['token_type'], credentials['id_token'])
+        .pipe(
+          catchError(error => {
+            this.router.navigateByUrl('/auth')
+            return throwError(() => new Error(error.message))
+          })
+        )
+        .subscribe(() => {
+          this.authService.persistCredentials(credentials)
+        })
+    }
+
+    this.formService.fetchForms().subscribe(console.log)
   }
-  async login(){
-    const data=await fetch("http://localhost:3000/api/login") //this url need to be abstracted better
-    const body=await data.json()
-    document.location.href=body.url
-  }
-  logout(){
-    this.loggedIn=false;
-    //delete the jwt 
+
+  logout () {
+    this.authService.logout()
+    this.router.navigateByUrl('/auth')
   }
 }

@@ -1,12 +1,16 @@
 <app-header />
 
 <main>
-  <h2>Your Forms:</h2>
   <article class="button-wrapper">
-    <button (click)="onOpenBuildFormDialog()" [disabled] ="!loggedIn">Build Form</button>
-    <button (click)="login()" [disabled]="loggedIn">Login</button>
-    <button [disabled]="!loggedIn" (click)="logout()">Logout</button>
+    <button (click)="onOpenBuildFormDialog()">Build Form</button>
+    <button (click)="logout()">Logout</button>
   </article>
+  <h2>Your Forms:</h2>
+  <ul>
+    <li>
+
+    </li>
+  </ul>
 </main>
 
 <app-footer />
