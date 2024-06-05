@@ -42,7 +42,7 @@ class Form{
             await client.query('COMMIT');
             return {
                 status: 'success',
-                formLink: `http://localhost:3000/api/forms/${formId}`,
+                formLink: `${process.env.SURVEY_LINK}/${formId}`,
                 message: 'Form created successfully'
             };
         } catch (error) {
