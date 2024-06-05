@@ -65,18 +65,6 @@ export default class SurveyPage {
           this.form.push(control, { emitEvent: false })
         })
       })
-
-    // const item = localStorage.getItem('FORM') 
-
-    // if (!item) return
-
-    // const survey = JSON.parse(item)
-
-    // if (survey.title?.length) this.title = survey.title
-    // if (survey.description?.length) this.description = survey.description
-    // if (survey.questions?.length) this.fields = survey.questions
-
-    // console.log('SURVEY',survey)
   }
 
   formKeys () {
@@ -90,7 +78,6 @@ export default class SurveyPage {
   submit () {
     const request = {
       formId: this.id,
-      // override: false,
       responses: this.survey.questions.map((q: any, index: number) => ({
         questionId: q.questionId,
         response: this.form.value[index],

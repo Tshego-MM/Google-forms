@@ -80,7 +80,6 @@ export default class HomePage implements OnInit {
 
     this.formService.fetchForms().subscribe(forms => {
       this.forms = forms
-      console.log('OFRMS', this.forms)
     })
   }
 

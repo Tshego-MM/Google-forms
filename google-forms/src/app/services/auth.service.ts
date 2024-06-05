@@ -9,14 +9,6 @@ import { catchError, of } from "rxjs";
 export default class AuthService {
   private http = inject(HttpClient)
 
-  // credentials = signal<any>(null)
-
-  // ngOnInit () {
-  //   const credentials = localStorage.getItem('credentials')
-  //   console.log('CRED', credentials)
-  //   this.credentials.set(credentials ? JSON.parse(credentials) : null)
-  // }
-
   login () {
     return this.http.get<any>('http://localhost:3000/api/login')
   }

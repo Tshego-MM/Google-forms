@@ -5,8 +5,6 @@ const {maxOptions,maxQuestions}=FORM;
 class Form{
     static async createForm(ownerId,title,description,questions){
 
-        console.log('QUESTIONS', questions)
-
         const client = await pool.connect();
         try {
             await pool.query('BEGIN');
