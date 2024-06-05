@@ -3,7 +3,7 @@ import HeaderComponent from "@/components/header/header.component";
 import ElementThumbnailComponent from "@/components/thumbnail/element/element.thumbnail.component";
 import { CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup } from "@angular/cdk/drag-drop";
 import { Component, input } from "@angular/core";
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {  FormArray, FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -38,8 +38,7 @@ export default class SurveyPage {
 
   fields: any[] = []
 
-  form = new FormArray<any>([])
-
+  form = new FormArray<FormControl>([])
   ngOnInit () {
     const item = localStorage.getItem('FORM') 
 
@@ -54,7 +53,8 @@ export default class SurveyPage {
     console.log('SURVEY',survey)
 
     survey.questions.forEach(() => {
-      this.form.push(new FormControl(''), { emitEvent: false })
+      const control: FormControl = new FormControl('');
+      this.form.push(control, { emitEvent: false })
     })
   }
 
