@@ -14,8 +14,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/constants/*": ["src/app/constants/*"],
       "@/components/*": ["src/app/components/*"],
+      "@/constants/*": ["src/app/constants/*"],
       "@/pages/*": ["src/app/pages/*"]
     },
     "useDefineForClassFields": false,
