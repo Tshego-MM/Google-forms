@@ -86,7 +86,8 @@ export default class BuilderPage {
   }
 
   discard () {
-    localStorage.removeItem('NEW_FORM')
+    localStorage.removeItem('FORM')
+    this.router.navigateByUrl("/")
   }
 
   save () {

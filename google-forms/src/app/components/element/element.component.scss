@@ -7,5 +7,14 @@ mat-expansion-panel {
   form {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+  }
+  .panel-header{
+    overflow: hidden;
+    max-width: 25rem
+  }
+  input{
+    overflow:hidden;
+    max-width: 25rem;
   }
 }

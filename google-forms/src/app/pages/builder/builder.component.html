@@ -19,11 +19,11 @@
   <main>
     <mat-card class="form">
       <mat-card-header>
-        <mat-card-title>{{ title }}</mat-card-title>
-        <mat-card-subtitle>{{ description }}</mat-card-subtitle>
+        <mat-card-title class="title">{{ title }}</mat-card-title>
+        <mat-card-subtitle class="title">{{ description }}</mat-card-subtitle>
       </mat-card-header>
 
-      <mat-card-content>
+      <mat-card-content class="title">
         <ul
           cdkDropList
           [cdkDropListData]="fields"
@@ -56,8 +56,8 @@
           Discard
         </button>
         <button
-          mat-flat-button
-          color="primary"
+          mat-button
+          color="success"
           (click)="save()"
         >
           Save</button>

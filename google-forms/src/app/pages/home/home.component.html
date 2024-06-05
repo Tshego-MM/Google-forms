@@ -10,11 +10,11 @@
     @for (form of forms; track form; let i = $index) {
       <li>
         <mat-card>
-          <p>{{ form.title }}</p>
+          <h3>{{ form.title }}</h3>
           <p>{{ form.description }}</p>
           <mat-card-actions align="end">
-            <button mat-flat-button color="primary" (click)="onViewForm(form.formid)">View</button>
-            <button mat-flat-button color="secondary" (click)="onCopy()" [cdkCopyToClipboard]="surveyUrl(form.formid)">Share</button>
+            <button color="primary" (click)="onViewForm(form.formid)">View</button>
+            <button color="secondary" (click)="onCopy()" [cdkCopyToClipboard]="surveyUrl(form.formid)">Share</button>
           </mat-card-actions>
         </mat-card>
       </li>

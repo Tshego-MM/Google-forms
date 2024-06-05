@@ -13,7 +13,7 @@ export const appRoutes: Route[] = [
   {
     path: 'builder',
     component: BuilderPage,
-    canActivate: [authGuard],
+    canActivate: [authGuard]
   },
   {
     path: 'survey/:id',
