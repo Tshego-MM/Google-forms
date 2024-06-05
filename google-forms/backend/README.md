@@ -4,18 +4,17 @@ POST: /api/forms/create
 
 Body:
 ```
-    [
-        {
-            question : 'Are you a student?',
-            questionType : int,
-            options : ['No','Yes']
-        },
-        {
-            question : 'How old are you?',
-            questionType : int,
-            options : []
-        }
-    ]
+{
+  "title": "your title",
+  "description": "your question",
+  "questions": [
+    {
+      "question": "Are you a student?",
+      "questionType": int,
+      "options": ["No", "Yes"]
+    }
+  ]
+}
 ```
 
 Response:
@@ -53,6 +52,29 @@ Response:
     ]
 }
 ```
+
+###Get all forms created by the user(admin)
+
+GET: api/forms/myforms
+
+Response:
+```
+[
+
+    {
+        "title": "Test title",
+        "description": "Test description",
+        "formid": "37f088f0-2c1a-45ed-ada1-df50b9392eac"
+    },
+    {
+        "title": "Test form",
+        "description": "Q1",
+        "formid": "d58e5652-a97b-4f9a-8201-23cc4632a5cd"
+    }
+]
+```
+
+
 
 ###Submit form response
 
@@ -98,7 +120,7 @@ If the user has already submitted the responses for that form, we'll ask the use
 }   
 ```
 
-###Get form Responses
+###Get form Responses (admin)
 
 GET: /api/responses/:formId
 
@@ -120,11 +142,23 @@ Body:
 ```
 
 
-###Donload responses
+###Donload responses (admin)
 
 GET: /api/responses/download/:formId
 
 Response
 ```
 Excel file
+```
+
+
+#If there are too many request from the same IP:
+
+Response:
+
+```
+server code : 429,
+{
+    "message": "Too many requests from this IP, please try again later."
+}
 ```

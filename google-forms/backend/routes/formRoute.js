@@ -1,20 +1,36 @@
 const express = require('express');
 const router = express.Router();
 const Form = require('../models/formModel');
-const tempUserId = 'e0f1c4d2-1a53-4b61-88f1-7f5e4f1c2f45'
 
 router.post('/create', async (req, res) => {
+  const userId = req.username;
     try {
-        const responseObject = await Form.createForm(tempUserId,req.body);
+        const questions=req.body.questions;
+        const title=req.body.title;
+        const description=req.body.description
+        const responseObject = await Form.createForm(userId,title,description,questions);
         
         res.status(200).json({ 
             status : responseObject.status,
             formLink : responseObject.formLink });
 
     } catch (error) {
+      console.error(error);
       res.status(500).json({ message: `${error}` });
     }
   });
+
+  router.get('/myforms', async (req, res) => {
+    const userId = req.username;
+      try {
+          const responseObject = await Form.getUserForms(userId);
+          
+          res.status(200).json(responseObject);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: `Could not get forms` });
+      }
+    });
   
   router.get('/:formId', async (req, res) => {
     try {
@@ -27,7 +43,7 @@ router.post('/create', async (req, res) => {
       console.error(error);
       res.status(500).json({
         status: 'error',
-        message: 'Error getting responses' });
+        message: 'Error while fetching questions' });
     }
   });
 

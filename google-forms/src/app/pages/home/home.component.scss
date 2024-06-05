@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: white;
+}
+
+main {
+  flex-grow: 1;
+  margin: 1em;
+}
+h2{
+  color: black;
+}
+
+.button-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  flex:1;
+  border-radius: 15px;
+}
+
+.button-wrapper button{
+  flex:1;
+  flex-wrap: wrap;
+  margin: 1em;
+  border-radius: 15px;
+  padding:1em;
+  background-color: lightgrey;
+}
+
+
+.button-wrapper button:active{
+  background-color: darkgray;
+}

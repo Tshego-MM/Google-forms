@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Responses = require('../models/responseModel');
-const tempUserId = 'e0f1c4d2-1a53-4b61-88f1-7f5e4f1c2f52'
 
 router.post('/', async (req, res) => {
   const { formId, override, responses } = req.body;
-  //const userId = req.user.id;
+  const userId = req.username;
     try {
-      const result = await Responses.captureResponses(formId, tempUserId, override, responses);
+      const result = await Responses.captureResponses(formId, userId, override, responses);
       if (result.status === 'warning') {
           res.status(409).json(result);
       } else {
@@ -20,8 +19,9 @@ router.post('/', async (req, res) => {
   });
 
 router.get('/download/:formId', async (req, res) => {
+  const userId = req.username;
     try {
-      const results = await Responses.getFormResponses(req.params.formId);
+      const results = await Responses.getFormResponses(req.params.formId,userId);
       const buffer = await Responses.generateExcel(results.formResponses);
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       res.setHeader('Content-Disposition', 'attachment; filename=results.xlsx');
@@ -34,8 +34,9 @@ router.get('/download/:formId', async (req, res) => {
   });
   
 router.get('/:formId', async (req, res) => {
+  const userId = req.username;
     try {
-      const responses = await Responses.getFormResponses(req.params.formId);
+      const responses = await Responses.getFormResponses(req.params.formId,userId);
       res.json({ responses });
     } catch (error) {
       console.error(error);

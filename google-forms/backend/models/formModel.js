@@ -1,10 +1,9 @@
 const pool = require('../database/dbinnit');
-const { maxQuestions, maxOptions } = require('../config/constants');
+const { FORM } = require('../config/constants');
+const {maxOptions,maxQuestions}=FORM;
 
 class Form{
-    static async createForm(ownerId,questions){
-
-
+    static async createForm(ownerId,title,description,questions){
         const client = await pool.connect();
         try {
             await pool.query('BEGIN');
@@ -12,8 +11,8 @@ class Form{
                 throw new Error(`More than ${maxQuestions} questions given`);
             }
             const formResult = await client.query(
-                'INSERT INTO google_form.forms(ownerID) VALUES ($1) RETURNING formID',
-                [ownerId]
+                'INSERT INTO google_form.forms(ownerID, form_name, form_description) VALUES ($1,$2,$3) RETURNING formID',
+                [ownerId,title,description]
             );
             const formId = formResult.rows[0].formid;
 
@@ -29,10 +28,11 @@ class Form{
                     if(question?.options.length>maxOptions){
                         throw new Error(`More than ${maxOptions} options given`);
                     }
+                    console.log(question.options)
                     for (const option of question.options) {
                         await client.query(
-                            `INSERT INTO google_form.options(fk_questionID, option)
-                             VALUES ($1, $2)`,
+                            `INSERT INTO google_form.options(entryid,fk_questionID, option)
+                             VALUES ((SELECT MAX(entryid) FROM google_form.options) + 1 ,$1, $2)`,
                             [questionId, option]
                         );
                     }
@@ -97,6 +97,28 @@ class Form{
         } catch (err) {
             console.error('Error executing query', err.stack);
             throw err;
+        }
+    }
+
+    static async getUserForms(userId){
+        const client = await pool.connect();
+        try{
+            const res = await client.query(
+                `
+                SELECT f.form_name AS Title, 
+                       f.form_description AS Description,
+                       f.formID AS formId
+                FROM 
+                    google_form.forms f
+                WHERE
+                    f.ownerID = $1
+                `, [userId]);
+            
+            return res.rows;
+        }catch(error){
+            throw new Error(`${error.message}`);
+        }finally{
+            client.release();
         }
     }
 

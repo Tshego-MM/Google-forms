@@ -1,0 +1,38 @@
+<section mat-dialog-title>
+  <h2>Create Form</h2>
+</section>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" type="text">
+      @if (this.form.get('title')?.errors) {
+        <mat-error>{{ errorMessage('title') }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" matInput></textarea>
+      <mat-error>{{ '' }}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    mat-button
+    color="warn"
+    (click)="onCancel()"
+  >
+    Nevermind
+  </button>
+  <button
+    mat-flat-button
+    [disabled]="!form.valid"
+    color="primary"
+    (click)="onContinue()"
+  >
+    Continue
+  </button>
+</mat-dialog-actions>

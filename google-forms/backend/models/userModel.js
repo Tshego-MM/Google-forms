@@ -10,6 +10,8 @@ class User{
     static async getUserById(userId){
         return userId;
     }
+
+    
 }
 
 module.exports = User;

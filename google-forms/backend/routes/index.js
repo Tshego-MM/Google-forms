@@ -5,8 +5,7 @@ var router = express.Router();
 
 router.get('/', async function(req, res, next) {
   try{
-    const result=await db.query('SELECT * FROM google_form.forms');
-    res.json(result.rows);
+    res.send("well done, you found the test api");
   }catch(e){
     res.status(500).send(e);
   }
