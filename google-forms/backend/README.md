@@ -11,7 +11,8 @@ Body:
     {
       "question": "Are you a student?",
       "questionType": int,
-      "options": ["No", "Yes"]
+      "options": ["No", "Yes"],
+      "required": boolean
     }
   ]
 }
