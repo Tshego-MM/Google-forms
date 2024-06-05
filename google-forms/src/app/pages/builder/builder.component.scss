@@ -20,7 +20,9 @@ section {
   flex-grow: 1;
   overflow-y: hidden;
 
-
+  .title{
+    overflow-x: hidden;
+  }
   main {
     display: flex;
     flex-direction: column;
@@ -31,13 +33,16 @@ section {
     mat-card {
       display: flex;
       flex-direction: column;
-
+      // max-width: 10rem;
+      overflow-x: hidden;
       &-content {
         flex-grow: 1;
         padding: 1rem;
         overflow-y: hidden;
+        overflow-x: hidden;
 
         & > ul {
+          
           height: 100%;
           overflow-y: auto;
           padding-block: 1rem;
