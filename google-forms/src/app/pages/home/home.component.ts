@@ -4,10 +4,10 @@ import { MatDialog } from "@angular/material/dialog";
 import FooterComponent from "@/components/footer/footer.component";
 import HeaderComponent from "@/components/header/header.component";
 import BuildFormDialog from "@/components/dialog/build-form/build-form.dialog.component";
-import { Router } from "@angular/router";
+import { ActivatedRoute, ActivationEnd, Router } from "@angular/router";
 import AuthService from "@/services/auth.service";
 import { getHashParameters } from "@/utilities/url";
-import { catchError, finalize, of, throwError } from "rxjs";
+import { catchError, finalize, of, pipe, throwError } from "rxjs";
 import SnackbarService from "@/services/snackbar.service";
 import FormService from "@/services/form.service";
 import { MatCardModule } from "@angular/material/card";
@@ -33,6 +33,7 @@ export default class HomePage implements OnInit {
   private readonly authService = inject(AuthService)
   private readonly formService = inject(FormService)
   private readonly snackbarService = inject(SnackbarService)
+  private readonly route = inject(ActivatedRoute)
 
   loggedIn = false
 
@@ -43,44 +44,15 @@ export default class HomePage implements OnInit {
   }
 
   ngOnInit () {
-    let isLocalStorageUpdated = false
-    let credentials = this.authService.fetchCredentials()
+    let credentials = getHashParameters()
 
-    const token = credentials?.['id_token']
-
-    if (token) {
-      this.authService
-        .verifyToken(credentials['token_type'], credentials['id_token'])
-        .pipe(
-          catchError(error => throwError(() => new Error(error.message)))
-        )
-        .subscribe(() => {
-          this.authService.persistCredentials(credentials)
-          isLocalStorageUpdated = true
-        })
+    if (credentials?.['id_token'] && credentials?.['token_type']) {
+      this.authService.persistCredentials(credentials)
+    } else {
+      credentials = this.authService.fetchCredentials()
     }
 
-    if (isLocalStorageUpdated) return
-
-    credentials = getHashParameters()
-
-    if (credentials) {
-      this.authService
-        .verifyToken(credentials['token_type'], credentials['id_token'])
-        .pipe(
-          catchError(error => {
-            this.router.navigateByUrl('/auth')
-            return throwError(() => new Error(error.message))
-          })
-        )
-        .subscribe(() => {
-          this.authService.persistCredentials(credentials)
-        })
-    }
-
-    this.formService.fetchForms().subscribe(forms => {
-      this.forms = forms
-    })
+    this.formService.fetchForms().subscribe(forms => this.forms = forms)
   }
 
   logout () {
