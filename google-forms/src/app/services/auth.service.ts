@@ -1,7 +1,9 @@
 import { getHashParameters } from "@/utilities/url";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
+import { ConstantPool } from "@angular/compiler";
 import { Injectable, OnInit, inject, signal } from "@angular/core";
-import { catchError, of } from "rxjs";
+import { tap } from "lodash";
+import { catchError, map, of, pipe } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,7 @@ export default class AuthService {
       {
         headers: { Authorization: `${type} ${token}` },
         responseType: 'text' as 'json',
+        observe: 'response' as 'events',
       }
     )
   }

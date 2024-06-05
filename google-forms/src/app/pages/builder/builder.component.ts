@@ -91,7 +91,7 @@ export default class BuilderPage {
 
   save () {
     const form = {
-      tile: this.title,
+      title: this.title,
       description: this.description,
       questions: this.fields.map(f => ({
         required: f.properties.value.required,
@@ -99,15 +99,7 @@ export default class BuilderPage {
         questionType: 2
       }))
     }
-    // localStorage.setItem('FORM', JSON.stringify({
-    //   tile: this.title,
-    //   description: this.description,
-    //   // questions: this.fields.map(f => ({
-    //   //   ...f,
-    //   //   properties: f.properties.value
-    //   // })),
-    //   questions: 
-    // }))
+
     localStorage.setItem('FORM', JSON.stringify(form))
 
     this.formService
@@ -125,7 +117,7 @@ export default class BuilderPage {
             message: 'Form created successully!',
             config: { panelClass: 'info-notification' }
           })
-          this.router.navigateByUrl('/survey')
+          this.router.navigateByUrl('/')
         })
       )
       .subscribe()
