@@ -19,6 +19,18 @@ router.post('/create', async (req, res) => {
       res.status(500).json({ message: `${error}` });
     }
   });
+
+  router.get('/myforms', async (req, res) => {
+    const userId = req.username;
+      try {
+          const responseObject = await Form.getUserForms(userId);
+          
+          res.status(200).json(responseObject);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: `Could not get forms` });
+      }
+    });
   
   router.get('/:formId', async (req, res) => {
     try {
