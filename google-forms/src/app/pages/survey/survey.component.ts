@@ -66,5 +66,5 @@ export default class SurveyPage {
     return this.form.get(name) as FormControl
   }
 
-  submit () {}
+  submit () {console.log("logged")}
 }

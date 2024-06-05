@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-
+import { RouterModule } from '@angular/router';
 @Component({
-  imports: [],
+  imports: [RouterModule],
   selector: 'app-header',
   standalone: true,
   styleUrl: './header.component.scss',
