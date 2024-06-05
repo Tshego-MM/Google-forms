@@ -18,9 +18,9 @@ class Form{
 
             for (const [index, question] of questions.entries()) {
                 const questionResult = await client.query(
-                    `INSERT INTO google_form.questions(fk_formID, fk_Type, questionText, questionPosition)
-                     VALUES ($1, $2, $3, $4) RETURNING questionID`,
-                    [formId, question.questionType, question.question, index + 1]
+                    `INSERT INTO google_form.questions(fk_formID, fk_Type, questionText, questionPosition, required_field)
+                     VALUES ($1, $2, $3, $4,$5) RETURNING questionID`,
+                    [formId, question.questionType, question.question, index + 1,question.required]
                 );
                 const questionId = questionResult.rows[0].questionid;
 
@@ -60,7 +60,8 @@ class Form{
                             q.questionText AS question, 
                             q.questionPosition AS questionPosition, 
                             q.questionID AS questionId, 
-                            o.option AS option
+                            q.required_field AS required,
+                            o.option AS option,
                         FROM 
                             google_form.questions q
                         LEFT JOIN 
