@@ -51,10 +51,10 @@ export default class BuildFormDialog {
       },
     }
 
-    localStorage.setItem('NEW_FORM', JSON.stringify(form))
+    localStorage.setItem('FORM', JSON.stringify(form))
 
     // TODO: Navigate to build page with data
-    this.router.navigate(['builder'])
+    this.router.navigateByUrl('/builder')
   }
 
   errorMessage (controlName: string) {

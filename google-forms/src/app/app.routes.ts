@@ -18,7 +18,7 @@ export const appRoutes: Route[] = [
   {
     path: 'survey',
     component: SurveyPage,
-    canActivate: [authGuard]
+    // canActivate: [authGuard]
   },
   {
     path: 'auth',

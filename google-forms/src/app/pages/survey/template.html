@@ -1,0 +1,41 @@
+<app-header />
+
+<main>
+  <mat-card class="form">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+      <mat-card-subtitle>{{ description }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form>
+        @for (key of formKeys(); track key; let i = $index) {
+          <div class="field">
+            <label [for]="">{{ fields[i].properties.question }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                [formControl]="getControl(key)"
+                type="text"
+                [placeholder]="getControl(key).value.placeholder"
+              >
+              @if (getControl(key).errors) {
+                <mat-error>{{ '' }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        }
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="submit()"
+      >
+        Submit
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</main>
+
+<!-- <footer>&copy; Copyright 2024</footer> -->

@@ -55,12 +55,14 @@ export default class BuilderPage {
   fields: any[] = []
 
   ngOnInit () {
-    const item = JSON.parse(
-      localStorage.getItem('NEW_FORM') ?? '{}'
-    )
+    const item = localStorage.getItem('FORM')
 
-    if (item.metadata?.title?.length) this.title = item.metadata?.title
-    if (item.metadata?.description?.length) this.description = item.metadata?.description
+    if (!item) return
+
+    const survey = JSON.parse(item)
+
+    if (survey.metadata?.title?.length) this.title = survey.metadata?.title
+    if (survey.metadata?.description?.length) this.description = survey.metadata?.description
   }
 
   drop (event: CdkDragDrop<typeof fields>) {
@@ -88,24 +90,25 @@ export default class BuilderPage {
   }
 
   save () {
-    localStorage.setItem('NEW_FORM', JSON.stringify({
-      metadata: {
-        title: this.title,
-        description: this.description,
-      },
-      content: this.fields.map(f => ({ ...f, properties: f.properties.value })),
-    }))
-
-    const questions = this.fields.map(f => ({
-      question: f.properties.value.question,
-      questionType: 2
-    }))
-
     const form = {
-      title: this.title,
+      tile: this.title,
       description: this.description,
-      questions,
+      questions: this.fields.map(f => ({
+        required: f.properties.value.required,
+        question: f.properties.value.question,
+        questionType: 2
+      }))
     }
+    // localStorage.setItem('FORM', JSON.stringify({
+    //   tile: this.title,
+    //   description: this.description,
+    //   // questions: this.fields.map(f => ({
+    //   //   ...f,
+    //   //   properties: f.properties.value
+    //   // })),
+    //   questions: 
+    // }))
+    localStorage.setItem('FORM', JSON.stringify(form))
 
     this.formService
       .createForm(form)
@@ -122,7 +125,7 @@ export default class BuilderPage {
             message: 'Form created successully!',
             config: { panelClass: 'info-notification' }
           })
-          this.router.navigateByUrl('/')
+          this.router.navigateByUrl('/survey')
         })
       )
       .subscribe()
