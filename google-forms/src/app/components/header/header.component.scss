@@ -1,20 +1,24 @@
 :host {
-  margin: 1rem;
-  border-color: black;
-  border-style: solid;
-  border-width: 3px;
-  border-radius: 8px;
   display: flex;
   color: black;
-  
+  background-color: darkslategray;
 }
 
 h1 {
   margin: 1rem;
+  color: white;
 }
-
+a{
+  text-decoration: none;
+  color: black;
+}
 .Header-Wrapper{
   display: flex;
   width: 100%;
   justify-content: center;
+}
+p{
+  text-align: center;
+  margin: 1rem;
+  color: white;
 }

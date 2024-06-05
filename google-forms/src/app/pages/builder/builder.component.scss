@@ -20,10 +20,9 @@ section {
   flex-grow: 1;
   overflow-y: hidden;
 
-  aside {
-
+  .title{
+    overflow-x: hidden;
   }
-
   main {
     display: flex;
     flex-direction: column;
@@ -34,13 +33,16 @@ section {
     mat-card {
       display: flex;
       flex-direction: column;
-
+      // max-width: 10rem;
+      overflow-x: hidden;
       &-content {
         flex-grow: 1;
         padding: 1rem;
         overflow-y: hidden;
+        overflow-x: hidden;
 
         & > ul {
+          
           height: 100%;
           overflow-y: auto;
           padding-block: 1rem;
@@ -91,4 +93,24 @@ section {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+aside{
+  margin: 1rem;
+}
+
+.mat-success {
+  background-color: darkslategray;
+  color:white;
+}
+.mat-success:hover{
+  background-color: #2a3f42;
+}
+
+.mat-success:not(:disabled){
+  color: white;
+}
+.mat-success:disabled{
+  background-color: lightgray;
+  color: darkgray;
 }
