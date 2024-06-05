@@ -1,5 +1,5 @@
 import HeaderComponent from "@/components/header/header.component";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
   CdkDrag,
   CdkDragDrop,
@@ -18,6 +18,10 @@ import { cloneDeep } from "lodash";
 import ElementThumbnailComponent from "@/components/thumbnail/element/element.thumbnail.component";
 import FormElementComponent from "@/components/element/element.component";
 import { MatButtonModule } from "@angular/material/button";
+import FormService from "@/services/form.service";
+import { catchError, finalize, throwError } from "rxjs";
+import SnackbarService from "@/services/snackbar.service";
+import { Router } from "@angular/router";
 
 @Component({
   imports: [
@@ -39,6 +43,10 @@ import { MatButtonModule } from "@angular/material/button";
   templateUrl: './builder.component.html',
 })
 export default class BuilderPage {
+  private readonly formService = inject(FormService)
+  private readonly snackbarService = inject(SnackbarService)
+  private readonly router = inject(Router)
+
   title = 'New Form'
   description = 'A generic description'
 
@@ -47,12 +55,14 @@ export default class BuilderPage {
   fields: any[] = []
 
   ngOnInit () {
-    const item = JSON.parse(
-      localStorage.getItem('NEW_FORM') ?? '{}'
-    )
+    const item = localStorage.getItem('FORM')
 
-    if (item.metadata?.title?.length) this.title = item.metadata?.title
-    if (item.metadata?.description?.length) this.description = item.metadata?.description
+    if (!item) return
+
+    const survey = JSON.parse(item)
+
+    if (survey.metadata?.title?.length) this.title = survey.metadata?.title
+    if (survey.metadata?.description?.length) this.description = survey.metadata?.description
   }
 
   drop (event: CdkDragDrop<typeof fields>) {
@@ -80,13 +90,45 @@ export default class BuilderPage {
   }
 
   save () {
-    localStorage.setItem('NEW_FORM', JSON.stringify({
-      metadata: {
-        title: this.title,
-        description: this.description,
-      },
-      content: this.fields.map(f => ({ ...f, properties: f.properties.value })),
-    }))
+    const form = {
+      tile: this.title,
+      description: this.description,
+      questions: this.fields.map(f => ({
+        required: f.properties.value.required,
+        question: f.properties.value.question,
+        questionType: 2
+      }))
+    }
+    // localStorage.setItem('FORM', JSON.stringify({
+    //   tile: this.title,
+    //   description: this.description,
+    //   // questions: this.fields.map(f => ({
+    //   //   ...f,
+    //   //   properties: f.properties.value
+    //   // })),
+    //   questions: 
+    // }))
+    localStorage.setItem('FORM', JSON.stringify(form))
+
+    this.formService
+      .createForm(form)
+      .pipe(
+        catchError(error => {
+          this.snackbarService.show({
+            message: 'Error creating form',
+            config: { panelClass: 'info-notification' }
+          })
+          return throwError(() => new Error(error))
+        }),
+        finalize(() => {
+          this.snackbarService.show({
+            message: 'Form created successully!',
+            config: { panelClass: 'info-notification' }
+          })
+          this.router.navigateByUrl('/survey')
+        })
+      )
+      .subscribe()
   }
 
   toggleSidebar () {

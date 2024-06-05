@@ -15,8 +15,10 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["src/app/components/*"],
-      "@/constants/*": ["src/app/constants/*"],
-      "@/pages/*": ["src/app/pages/*"]
+      "@/pages/*": ["src/app/pages/*"],
+      "@/interceptors/*": ["src/app/interceptors/*"],
+      "@/services/*": ["src/app/services/*"],
+      "@/utilities/*": ["src/app/utilities/*"]
     },
     "useDefineForClassFields": false,
     "esModuleInterop": true,

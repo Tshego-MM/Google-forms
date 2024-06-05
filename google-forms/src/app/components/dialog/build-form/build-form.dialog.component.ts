@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from "@angular/material/dialog";
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { capitalize } from 'lodash';
+import FormService from "@/services/form.service";
 
 @Component({
   imports: [
@@ -24,14 +25,13 @@ import { capitalize } from 'lodash';
   templateUrl: './build-form.dialog.component.html',
 })
 export default class BuildFormDialog {
+  private readonly router = inject(Router)
+  private readonly builder = inject(FormBuilder)
+  public readonly dialogRef = inject(MatDialogRef<BuildFormDialog>)
 
   form!: FormGroup
 
-  constructor (
-    private router: Router,
-    private builder: FormBuilder,
-    public dialogRef: MatDialogRef<BuildFormDialog>
-  ) {
+  constructor () {
     this.form = this.builder.group({
       title: ['', [Validators.required]],
       description: ['', []],
@@ -51,10 +51,9 @@ export default class BuildFormDialog {
       },
     }
 
-    localStorage.setItem('NEW_FORM', JSON.stringify(form))
+    localStorage.setItem('FORM', JSON.stringify(form))
 
-    // TODO: Navigate to build page with data
-    this.router.navigate(['builder'])
+    this.router.navigateByUrl('/builder')
   }
 
   errorMessage (controlName: string) {

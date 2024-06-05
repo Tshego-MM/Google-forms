@@ -13,6 +13,7 @@ const formRouter = require('./routes/formRoute');
 const loginRouter=require("./routes/loginRoute")
 const {ensureSecure,verifyJWT} = require('./middleware/ensureSecure');
 const rateLimit = require('./middleware/reateLimit');
+const logRequests = require('./middleware/loggerMiddleware');
 
 const app = express();
 
@@ -22,14 +23,17 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
-app.use(cors(corsOptions));
+
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(ensureSecure);//comment this line in dev
-// app.use(rateLimit);
+app.use(rateLimit);
+app.use(logRequests);
+app.use(cors(corsOptions));
+
 
 app.use("/api/login",loginRouter);
 app.use('/api/', indexRouter);

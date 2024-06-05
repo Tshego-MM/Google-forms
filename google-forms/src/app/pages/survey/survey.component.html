@@ -1,0 +1,35 @@
+<app-header />
+
+<main>
+  <mat-card class="form">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+      <mat-card-subtitle>{{ description }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form>
+        @for (control of form.controls; track control; let i = $index) {
+          <label [for]="">{{ survey.questions[i].question }}</label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [formControl]="control"
+              type="text"
+            >
+          </mat-form-field>
+        }
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="submit()"
+      >
+        Submit
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</main>
+
+<footer>&copy; Copyright 2024</footer>
