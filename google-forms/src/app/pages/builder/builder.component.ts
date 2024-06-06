@@ -13,7 +13,7 @@ import {
 import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
 import { MatSidenavModule } from '@angular/material/sidenav'
-import { fields } from "@/constants/fields";
+import { fields } from "../../constants/fields";
 import { cloneDeep } from "lodash";
 import ElementThumbnailComponent from "@/components/thumbnail/element/element.thumbnail.component";
 import FormElementComponent from "@/components/element/element.component";
