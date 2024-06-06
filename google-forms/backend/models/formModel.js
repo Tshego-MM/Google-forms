@@ -29,7 +29,6 @@ class Form{
                     if(question?.options.length>maxOptions){
                         throw new Error(`More than ${maxOptions} options given`);
                     }
-                    console.log(question.options)
                     for (const option of question.options) {
                         await client.query(
                             `INSERT INTO google_form.options(entryid,fk_questionID, option)

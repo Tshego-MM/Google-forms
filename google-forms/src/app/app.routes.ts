@@ -29,5 +29,9 @@ export const appRoutes: Route[] = [
   {
     path: 'auth',
     component: AuthPage,
-  }
+  },
+  {
+    path: '**',
+    component: HomePage,
+  },
 ];

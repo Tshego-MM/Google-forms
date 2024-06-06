@@ -58,7 +58,6 @@ export default class SurveyPage {
     this.formService.fetchForm(this.id)
       .subscribe(survey => {
         this.survey = survey
-        console.log(this.survey)
 
         this.survey.questions.forEach(() => {
           const control: FormControl = new FormControl('');
