@@ -68,6 +68,10 @@ export default class HomePage implements OnInit {
     this.router.navigate(['survey', id]);
   }
 
+  onDownloadForm (id: string) {
+    this.router.formService.downloadResponses()
+  }
+
   onCopy() {
     this.snackbarService.show({ message: 'Copied to clipboard!' });
   }

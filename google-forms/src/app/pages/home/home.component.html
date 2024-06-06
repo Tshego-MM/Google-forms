@@ -13,6 +13,7 @@
           <h3>{{ form.title }}</h3>
           <p>{{ form.description }}</p>
           <mat-card-actions align="end">
+            <button (click)="onDownloadForm(form.formid)">Download</button>
             <button (click)="onViewFormResponse(form.formid)">View Responses</button>
             <button color="primary" (click)="onViewForm(form.formid)">View</button>
             <button color="secondary" (click)="onCopy()" [cdkCopyToClipboard]="surveyUrl(form.formid)">Share</button>
