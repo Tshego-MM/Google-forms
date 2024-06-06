@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(rateLimit);
 app.use(logRequests);
 app.use(corsConfig);
-
+app.options('*', corsConfig);
 
 app.use("/api/login",loginRouter);
 app.use('/api/', indexRouter);
