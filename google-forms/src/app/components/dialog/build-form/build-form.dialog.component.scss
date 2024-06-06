@@ -5,4 +5,21 @@ mat-dialog-content {
     display: flex;
     flex-direction: column;
   }
+
+}
+
+.mat-success {
+  background-color: darkslategray;
+  color:white;
+}
+.mat-success:hover{
+  background-color: #2a3f42;
+}
+
+.mat-success:not(:disabled){
+  color: white;
+}
+.mat-success:disabled{
+  background-color: lightgray;
+  color: darkgray;
 }

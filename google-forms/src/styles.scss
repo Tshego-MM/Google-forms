@@ -1,8 +1,9 @@
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%; width: 100vw; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif ;  }
 
 * {
   box-sizing: border-box;
+  // background-color: #e9feff;
 }
 
 .success-notification {
@@ -23,4 +24,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .info-notification {
   background-color: #2196f3 !important;
   color: white !important;
+}
+
+button{
+  background-color: darkslategray;
+  border-radius: 25px;
+  color:white;
+  width: 10rem;
+  height: 3rem;
+  border:transparent;
+  cursor: pointer;
 }

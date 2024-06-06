@@ -33,8 +33,8 @@ export default class BuildFormDialog {
 
   constructor () {
     this.form = this.builder.group({
-      title: ['', [Validators.required]],
-      description: ['', []],
+      title: ['', [Validators.required,Validators.maxLength(255)]],
+      description: ['', [Validators.required,Validators.maxLength(1000)]],
     })
   }
 

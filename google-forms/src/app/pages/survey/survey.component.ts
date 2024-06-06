@@ -4,7 +4,7 @@ import ElementThumbnailComponent from "@/components/thumbnail/element/element.th
 import FormService from "@/services/form.service";
 import SnackbarService from "@/services/snackbar.service";
 import { CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup } from "@angular/cdk/drag-drop";
-import { Component, inject, input } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {  FormArray, FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
