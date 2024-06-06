@@ -11,7 +11,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
 
 @Component({
@@ -40,7 +40,7 @@ export default class SurveyPage {
   private readonly route = inject(ActivatedRoute)
   private readonly formService = inject(FormService)
   private readonly snackbarService = inject(SnackbarService)
-
+  private readonly router=inject(Router);
   id = ''
   title = 'New Form'
   description = 'A generic form'
@@ -93,6 +93,7 @@ export default class SurveyPage {
       )
       .subscribe(() => {
         this.snackbarService.show({ message: 'Response submitted!' })
+        this.router.navigateByUrl("/")
       })
   }
 }
