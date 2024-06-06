@@ -1,0 +1,16 @@
+<article class="my-forms">
+  <ul>
+    <li>
+      <p>Form Name</p>
+      <p>Description</p>
+    </li>
+    @for (form of forms; track form) {
+    <li>
+      <p>{{ form.form_name }}</p>
+      <p>{{ form.form_description }}</p>
+    </li>
+    }@empty {
+    <p>{{ noDataMessage }}</p>
+    }
+  </ul>
+</article>
