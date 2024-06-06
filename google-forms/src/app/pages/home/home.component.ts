@@ -79,6 +79,21 @@ export default class HomePage implements OnInit {
     this.router.navigate(['survey', id]);
   }
 
+  onDownloadForm(id: string) {
+    this.formService.downloadResponses(id).subscribe((blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${id}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }, error => {
+      this.snackbarService.show({ message: `Error downloading file ${error}` });
+    });
+  }
+
   onCopy() {
     this.snackbarService.show({ message: 'Copied to clipboard!' });
   }
