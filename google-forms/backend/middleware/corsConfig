@@ -2,7 +2,7 @@ const cors = require('cors');
 
 const allowedOrigins = [
     'http://localhost:4200',
-    'https://googleforms.projects.bbdgrad.com'
+    `${process.env.CORS_PRODURL}`
 ];
 
 const corsOptions = {
