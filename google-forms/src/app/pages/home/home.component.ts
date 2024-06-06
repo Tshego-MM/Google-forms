@@ -79,7 +79,7 @@ export default class HomePage implements OnInit {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     }, error => {
-      console.error('Error downloading file', error);
+      this.snackbarService.show({ message: `Error downloading file ${error}` });
     });
   }
 
