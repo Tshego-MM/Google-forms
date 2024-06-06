@@ -29,7 +29,6 @@ class Form{
                     if(question?.options.length>maxOptions){
                         throw new Error(`More than ${maxOptions} options given`);
                     }
-                    console.log(question.options)
                     for (const option of question.options) {
                         await client.query(
                             `INSERT INTO google_form.options(entryid,fk_questionID, option)
@@ -62,7 +61,7 @@ class Form{
                             q.questionPosition AS questionPosition, 
                             q.questionID AS questionId, 
                             q.required_field AS required,
-                            o.option AS option,
+                            o.option AS option
                         FROM 
                             google_form.questions q
                         LEFT JOIN 

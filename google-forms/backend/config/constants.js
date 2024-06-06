@@ -24,7 +24,7 @@ module.exports = {
             message: 'Too many requests from this IP, please try again later.'
         }
     },FORM:{
-        maxQuestions : 10,
+        maxQuestions : 50,
         maxOptions : 5
     }
 };

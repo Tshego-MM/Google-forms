@@ -14,10 +14,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/constants/*": ["src/app/constants/*"],
       "@/components/*": ["src/app/components/*"],
-      "@/interceptors/*": ["src/app/interceptors/*"],
+      "@/environments/*": ["src/environment/*"],
       "@/pages/*": ["src/app/pages/*"],
+      "@/interceptors/*": ["src/app/interceptors/*"],
       "@/services/*": ["src/app/services/*"],
       "@/utilities/*": ["src/app/utilities/*"]
     },
