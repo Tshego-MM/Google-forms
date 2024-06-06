@@ -1,7 +1,6 @@
 const cors = require('cors');
 
 const allowedOrigins = [
-    'http://localhost:4200',
     `${process.env.CORS_PRODURL}`
 ];
 
