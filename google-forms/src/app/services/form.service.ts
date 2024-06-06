@@ -22,8 +22,9 @@ export default class FormService {
     return this.http.get<any>(`${this.url}/forms/${id}`)
   }
 
-  downloadResponses (id: string) {
-    return this.http.get<any>(`${this.url}/responses/download/${id}`)
+  downloadResponses(id: string): Observable<Blob> {
+    const url = `${this.url}/download/${id}`;
+    return this.http.get(url, { responseType: 'blob' as 'json' });
   }
 
   createResponse (response: any) {
