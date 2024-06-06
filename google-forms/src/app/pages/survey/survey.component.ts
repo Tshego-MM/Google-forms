@@ -15,26 +15,26 @@ import { ActivatedRoute } from "@angular/router";
 import { catchError, throwError } from "rxjs";
 
 @Component({
-  imports: [
-    CdkDrag,
-    CdkDragPlaceholder,
-    CdkDropList,
-    CdkDropListGroup,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HeaderComponent,
-    FormElementComponent,
-    ElementThumbnailComponent,
-  ],
-  selector: 'app-survey-page',
-  standalone: true,
-  styleUrl: './survey.component.scss',
-  templateUrl: './survey.component.html',
+    selector: 'app-survey-page',
+    standalone: true,
+    styleUrl: './survey.component.scss',
+    templateUrl: './survey.component.html',
+    imports: [
+        CdkDrag,
+        CdkDragPlaceholder,
+        CdkDropList,
+        CdkDropListGroup,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HeaderComponent,
+        FormElementComponent,
+        ElementThumbnailComponent
+    ]
 })
 export default class SurveyPage {
   private readonly route = inject(ActivatedRoute)

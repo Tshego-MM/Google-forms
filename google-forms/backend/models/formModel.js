@@ -62,7 +62,7 @@ class Form{
                             q.questionPosition AS questionPosition, 
                             q.questionID AS questionId, 
                             q.required_field AS required,
-                            o.option AS option,
+                            o.option AS option
                         FROM 
                             google_form.questions q
                         LEFT JOIN 

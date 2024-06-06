@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Forms } from '../models/forms.model';
+import { FormResponses} from '../models/forms.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,11 +9,7 @@ import { Observable } from 'rxjs';
 export class MyformsService {
   constructor(private http: HttpClient) {}
 
-  getMyForms(username: string): Observable<Forms[]> {
-    return this.http.get<Forms[]>(`/api/forms/myforms?${username}`);
-  }
-
-  getFormResponses(formId: string): Observable<any[]> {
-    return this.http.get<any[]>(`/api/forms/${formId}`);
+  getFormResponses(formId: string): Observable<FormResponses> {
+    return this.http.get<FormResponses>(`http://localhost:3000/api/responses/${formId}`);
   }
 }
