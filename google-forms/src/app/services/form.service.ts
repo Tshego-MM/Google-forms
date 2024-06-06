@@ -23,7 +23,7 @@ export default class FormService {
   }
 
   downloadResponses (id: string) {
-    return this.http.get<any>(`${this.url}/responses/${id}`)
+    return this.http.get<any>(`${this.url}/responses/download/${id}`)
   }
 
   createResponse (response: any) {
