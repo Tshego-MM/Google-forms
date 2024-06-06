@@ -1,3 +1,4 @@
+import { environment } from "@/environments/environment";
 import { getHashParameters } from "@/utilities/url";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { ConstantPool } from "@angular/compiler";
@@ -9,10 +10,11 @@ import { catchError, map, of, pipe } from "rxjs";
   providedIn: 'root'
 })
 export default class AuthService {
-  private http = inject(HttpClient)
+  private readonly http = inject(HttpClient)
+  private readonly url = `${environment.serverOrigin}/api`
 
   login () {
-    return this.http.get<any>('http://localhost:3000/api/login')
+    return this.http.get<any>(`${this.url}/login`)
   }
 
   logout () {
@@ -21,7 +23,7 @@ export default class AuthService {
   
   verifyToken (type: string, token: string) {
     return this.http.get<any>(
-      'http://localhost:3000/api/users/testJWT',
+      `${this.url}/users/testJWT`,
       {
         headers: { Authorization: `${type} ${token}` },
         responseType: 'text' as 'json',
@@ -45,7 +47,7 @@ export default class AuthService {
   isAuthenticated () {
     const credentials = this.fetchCredentials()
 
-    if (!credentials['id_token']) return of(false)
+    if (!credentials?.['id_token']) return of(false)
 
     return this
       .verifyToken(credentials['token_type'], credentials['id_token'])

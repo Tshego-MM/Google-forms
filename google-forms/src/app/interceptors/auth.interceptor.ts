@@ -1,10 +1,13 @@
+import { environment } from "@/environments/environment"
 import AuthService from "@/services/auth.service"
 import { HttpInterceptorFn } from "@angular/common/http"
 import { inject } from "@angular/core"
 
 const unauthenicated = (url: URL) => {
+  const origin = `${environment.serverOrigin}/api`
+
   const unauthenicatedUrls: string[] = [
-    'http://localhost:3000/api/users/testJWT',
+    `${origin}/users/testJWT`,
   ]
 
   return unauthenicatedUrls.includes(url.href)

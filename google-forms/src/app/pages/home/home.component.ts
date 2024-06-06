@@ -43,16 +43,27 @@ export default class HomePage implements OnInit {
     this.dialog.open(BuildFormDialog);
   }
 
+  // We do it in this order (instead of early return) because we want to
+  // prioritize what could be latest token (from the URL)
   ngOnInit() {
     let credentials = getHashParameters();
 
     if (credentials?.['id_token'] && credentials?.['token_type']) {
       this.authService.persistCredentials(credentials);
+      this.formService.fetchForms().subscribe((forms) => (this.forms = forms));
     } else {
       credentials = this.authService.fetchCredentials();
-    }
+      this.authService.isAuthenticated()
+        .subscribe(authenticated => {
+          if (!authenticated) {
+            this.router.navigateByUrl('/auth')
+            return
+          }
 
-    this.formService.fetchForms().subscribe((forms) => (this.forms = forms));
+          this.formService.fetchForms()
+            .subscribe((forms) => (this.forms = forms));
+        })
+    }
   }
 
   logout() {
