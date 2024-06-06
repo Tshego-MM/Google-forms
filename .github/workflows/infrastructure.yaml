@@ -3,7 +3,7 @@ name: AWS-Infrastructure
 on:
   push:
     branches:
-      - tshego/fix/https
+      - main
 
 env:
   AWS_REGION: "eu-west-1"
