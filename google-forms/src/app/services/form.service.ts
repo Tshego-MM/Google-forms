@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,9 @@ export default class FormService {
     return this.http.get<any>(`${this.url}/forms/${id}`)
   }
 
-  downloadResponses (id: string) {
-    return this.http.get<any>(`${this.url}/responses/${id}`)
+  downloadResponses(id: string): Observable<any> {
+    const url = `${this.url}/responses/download/${id}`;
+    return this.http.get(url, { responseType: 'blob' as 'json' });
   }
 
   createResponse (response: any) {
