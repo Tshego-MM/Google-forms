@@ -18,7 +18,7 @@ module.exports = {
         INTERNAL_SERVER_ERROR: 'Internal Server Error'
     },
     RATE_LIMIT: {
-        WINDOW_MS: 10 * 60 * 1000,
+        WINDOW_MS:  60 * 1000,
         MAX_REQUESTS: 150,
         MESSAGE: {
             message: 'Too many requests from this IP, please try again later.'
