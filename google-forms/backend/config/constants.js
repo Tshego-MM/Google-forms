@@ -19,7 +19,7 @@ module.exports = {
     },
     RATE_LIMIT: {
         WINDOW_MS: 10 * 60 * 1000,
-        MAX_REQUESTS: 50,
+        MAX_REQUESTS: 150,
         MESSAGE: {
             message: 'Too many requests from this IP, please try again later.'
         }

@@ -22,16 +22,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(ensureSecure);//comment this line in dev
-app.use(rateLimit);
+
 app.use(logRequests);
 app.use(corsConfig);
-app.options('*', corsConfig);
+app.options(corsConfig);
 
 app.use("/api/login",loginRouter);
+// app.use(rateLimit);
 app.use('/api/', indexRouter);
-app.use('/api/users',verifyJWT, usersRouter);
-app.use('/api/responses',verifyJWT, responseRouter);
-app.use('/api/forms',verifyJWT,formRouter);
+app.use('/api/users',rateLimit,verifyJWT, usersRouter);
+app.use('/api/responses',rateLimit,verifyJWT, responseRouter);
+app.use('/api/forms',rateLimit,verifyJWT,formRouter);
 
 
 module.exports = app;
